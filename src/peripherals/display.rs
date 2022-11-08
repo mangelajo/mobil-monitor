@@ -24,16 +24,16 @@ pub struct Display {
     // I hope there's a better way of declaring this
     display: Ili9341<
                 display_interface_spi::SPIInterface<
-                esp_idf_hal::spi::Master<SPI3, Gpio18<esp_idf_hal::gpio::Unknown>, 
-                                               Gpio23<esp_idf_hal::gpio::Unknown>,
-                                               Gpio19<esp_idf_hal::gpio::Unknown>,
-                                               Gpio5<esp_idf_hal::gpio::Unknown>>,
-                                               Gpio4<esp_idf_hal::gpio::Output>,
-                                               Gpio5<esp_idf_hal::gpio::Output>>,
-               Gpio22<esp_idf_hal::gpio::Output>,
+                        esp_idf_hal::spi::Master<SPI3, Gpio18<esp_idf_hal::gpio::Unknown>, 
+                                                    Gpio23<esp_idf_hal::gpio::Unknown>,
+                                                    Gpio19<esp_idf_hal::gpio::Unknown>,
+                                                    Gpio5<esp_idf_hal::gpio::Unknown>>,
+                        Gpio4<esp_idf_hal::gpio::Output>,  // DC
+                        Gpio5<esp_idf_hal::gpio::Output>,  // CS
+                >, 
+               Gpio22<esp_idf_hal::gpio::Output>, // RESET
                >,
 }
-
 impl Display {
     pub fn new(
         backlight: gpio::Gpio15<gpio::Unknown>,
@@ -104,13 +104,13 @@ impl Display {
 
         // Include an image from a local path as bytes
 
-        let tga = Tga::from_slice(include_bytes!("../assets/test.tga")).unwrap();
+        let tga = Tga::from_slice(include_bytes!("../../assets/test.tga")).unwrap();
         /* 
         let tga_patri = Tga::from_slice(include_bytes!("../assets/patri.tga")).unwrap();
         let tga_patri2 = Tga::from_slice(include_bytes!("../assets/patri2.tga")).unwrap();
         */
-        let tga_marga = Tga::from_slice(include_bytes!("../assets/marga.tga")).unwrap();
-        let tga_marga2 = Tga::from_slice(include_bytes!("../assets/marga2.tga")).unwrap();
+        let tga_marga = Tga::from_slice(include_bytes!("../../assets/marga.tga")).unwrap();
+        let tga_marga2 = Tga::from_slice(include_bytes!("../../assets/marga2.tga")).unwrap();
 
         let image = Image::new(&tga, Point::zero());
         //let image_patri = Image::new(&tga_patri, Point::zero());

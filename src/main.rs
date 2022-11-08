@@ -1,7 +1,9 @@
 
-pub mod display;
+pub mod peripherals {
+    pub mod display;
+}
 
-pub use crate::display::Display;
+pub use crate::peripherals::display::Display;
 
 use esp_idf_sys as _; // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use embedded_svc::wifi::*;
